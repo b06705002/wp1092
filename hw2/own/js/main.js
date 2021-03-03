@@ -38,7 +38,7 @@ rightButElement.addEventListener(
             }
         }
         if (index == temp.length - 1) {
-            alert("No Previous image!!!");
+            alert("No Next image!!!");
         } else {
             document.getElementById("myImg").src = url.substr(0, url.length - 5) + imgList[index + 1];
         }
