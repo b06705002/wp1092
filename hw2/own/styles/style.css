@@ -1,0 +1,84 @@
+body {
+    background-image: url("../src/img/star.jpg");
+    background-size: cover;
+}
+
+.headline {
+    opacity: 0.5;
+    color: snow;
+    text-align: center;
+    text-decoration: blink;
+    font-size: 5vw;
+    font-family: fantasy;
+    animation-duration: 3s;
+    animation-name: blink;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes blink {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.flex-container {
+    display: flex;
+    margin: auto;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.previous {
+    margin: auto;
+    border-radius: 10px;
+    border-color: snow;
+}
+
+.image {
+    border-radius: 10px;
+    width: 30%;
+    margin: auto;
+}
+
+#myImg:hover {
+    opacity: 70%;
+}
+
+.next {
+    margin: auto;
+    border-radius: 10px;
+    border-color: snow;
+}
+
+a:hover,
+ :active {
+    color: hotpink;
+}
+
+a:link,
+ :visited {
+    color: snow;
+}
+
+.cloud {
+    position: absolute;
+    right: 10%;
+    width: 100px;
+    height: 100px;
+    animation-name: oxxo;
+    animation-duration: 10s;
+}
+
+@keyframes oxxo {
+    from {
+        margin-right: 80%;
+    }
+    to {
+        margin-right: 0%;
+    }
+}
