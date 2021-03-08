@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=RocknRoll+One&display=swap">  
+    <title>chenyutpe Music Player</title>
+</head>
+<body>
+    <div class="bg-img"></div>
+    <div class="main-container">
+        <div class="title">
+            <h2>chenyutpe Music Player</h2>
+        </div>
+        <div class="main">
+            <div class="song-info">
+                <div class="left-panel album-cover">
+                    <img src="./cover.png" alt="album cover image" width="300" height="300">
+                </div>
+                <div class="right-panel">
+                    <div class="song-name">
+                        Song Name
+                    </div>
+                    <div class="artist-name">
+                        Artist Name
+                    </div>
+                    <div class="slider" id="music-progress">
+                        <input type="range" min="1" max="100" value="50">
+                        <br></br>
+                    </div>
+                    <div class="controls">
+                        <i class="btn fa fa-step-backward"></i>
+                        <i class="btn fa fa-play"></i>
+                        <i class="btn fa fa-step-forward"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
