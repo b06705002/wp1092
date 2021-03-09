@@ -33,15 +33,13 @@ body {
     align-items: center;
 }
 
-.previous {
-    margin: auto;
-    border-radius: 10px;
-    border-color: snow;
-}
-
 .image {
     border-radius: 10px;
     width: 30%;
+    margin: auto;
+}
+
+.but {
     margin: auto;
 }
 
@@ -49,10 +47,14 @@ body {
     opacity: 70%;
 }
 
-.next {
-    margin: auto;
-    border-radius: 10px;
-    border-color: snow;
+#leftButton:hover {
+    opacity: 70%;
+    cursor: pointer;
+}
+
+#rightButton:hover {
+    opacity: 70%;
+    cursor: pointer;
 }
 
 a:hover,
