@@ -4,7 +4,7 @@ describe('Hackathon 1 Test', () => {
         cy.visit('index.html')
         cy.get('#comment-num').should('have.text', '1則留言')
     })
-  
+
     // checkpoint 2
     it('[Basic] Add buttons (10%)', () => {
         cy.visit('index.html')
@@ -73,11 +73,12 @@ describe('Hackathon 1 Test', () => {
     // checkpoint 9
     it('[Basic] Hide The Buttons (5%)', () => {
         cy.visit('index.html')
-        cy.get('#cancel-button').should('not.be.visible')
-        cy.get('#comment-button').should('not.be.visible')
-        cy.get('#comment-input').click()
+        cy.get('#comment-input').type('test')
         cy.get('#cancel-button').should('be.visible')
         cy.get('#comment-button').should('be.visible')
+        cy.get('#cancel-button').click()
+        cy.get('#cancel-button').should('not.be.visible')
+        cy.get('#comment-button').should('not.be.visible')
     })
 
     // checkpoint 10

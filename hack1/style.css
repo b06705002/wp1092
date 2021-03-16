@@ -196,5 +196,19 @@ button:hover {
 #comment-button-group {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;    
+    justify-content: flex-end;
+}
+
+button.cancelBut {
+    width: 72px;
+    height: 40px;
+    border-style: none;
+    border-radius: 2px;
+}
+
+button.commentBut {
+    width: 72px;
+    height: 40px;
+    border-style: none;
+    border-radius: 2px;
 }
