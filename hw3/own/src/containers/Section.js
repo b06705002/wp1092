@@ -9,6 +9,7 @@ class Section extends Component {
         this.state = {
             inputValue: '',
             addList: [],
+            idCount: 0
         };
     }
 
@@ -16,15 +17,18 @@ class Section extends Component {
 
     inputKeyUp = (e) => {
         if(e.keyCode===13) {
-            if (this.state.addList.length === 0) {
+            if (this.state.idCount === 0) {
                 this.setState(state => ({addList: [{id: 0, list: this.state.inputValue, stat: 1}]}));
             }
             else {
-                var joined = [...this.state.addList, {id: this.state.addList.length, list: this.state.inputValue, stat: 1}];
+                var joined = [...this.state.addList, {id: this.state.idCount, list: this.state.inputValue, stat: 1}];
                 this.setState(state => ({addList: joined}));
             }
             this.setState({inputValue: ''}, () => {
                 // console.log("Hi");
+            });
+            this.setState({idCount: this.state.idCount+1}, () => {
+                // console.log(this.state.idCount);
             });
         }
     };
@@ -33,7 +37,7 @@ class Section extends Component {
         var x = this.state.addList;
         for (var i = 0; i<x.length; i++){
             if (x[i].id === ID){
-                if (x[i].stat == 1){
+                if (x[i].stat === 1){
                     x[i].stat = 0;
                 }
                 else{
@@ -44,6 +48,28 @@ class Section extends Component {
         this.setState(state => ({addList: x}));
     }
     
+    tfDelete(ID){
+        var arr = [];
+        var x = this.state.addList;
+        for (var i = 0; i<x.length; i++){
+            if (x[i].id !== ID){
+                arr.push(x[i]);
+            }
+        }
+        this.setState(state => ({addList: arr}));
+    }
+
+    tfShow(){
+        var arr = [];
+        var x = this.state.addList;
+        for (var i = 0; i<x.length; i++){
+            if (x[i].stat === 1){
+                arr.push(x[i]);
+            }
+        }
+        this.setState(state => ({addList: arr}));
+    }
+
     render() {
         return (
             <>
@@ -51,9 +77,9 @@ class Section extends Component {
                     <input className="todo-app__input" placeholder="What needs to be done?" 
                         onChange={this.inputChange}  value={this.state.inputValue}
                             onKeyUp={this.inputKeyUp}/>
-                    <Ul data={this.state.addList} TFChange={(e) => {this.tfChange(e)}}/>
+                    <Ul data={this.state.addList} TFChange={(e) => {this.tfChange(e)}} TFDelete={(e) => {this.tfDelete(e)}}/>
                 </section>
-                <Footer data={this.state.addList} />
+                <Footer data={this.state.addList} TFShow={() => {this.tfShow()}}/>
             </>
         );
     }

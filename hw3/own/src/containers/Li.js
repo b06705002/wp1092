@@ -4,7 +4,10 @@ import Img from "../components/Img";
 
 class Li extends Component {
     handerClick(){
-        this.props.changeStatus(this.props.id)
+        this.props.changeStatus(this.props.id);
+    }
+    handerDelete(){
+        this.props.deleteStatus(this.props.id);
     }
     render() {
         if (this.props.sta === 1){
@@ -14,7 +17,7 @@ class Li extends Component {
                         <label></label>
                     </div>
                     <H1 txt={this.props.text} sty={this.props.sta} />
-                    <Img />
+                    <Img deleteImage={() => {this.handerDelete()}} />
                 </li>
             );
         }
@@ -25,7 +28,7 @@ class Li extends Component {
                         <label className="gogogo"></label>
                     </div>
                     <H1 txt={this.props.text} sty={this.props.sta} />
-                    <Img />
+                    <Img deleteImage={() => {this.handerDelete()}} />
                 </li>
             );
         }
