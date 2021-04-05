@@ -9,7 +9,8 @@ class Section extends Component {
         this.state = {
             inputValue: '',
             addList: [],
-            idCount: 0
+            idCount: 0,
+            show: 0
         };
     }
 
@@ -32,6 +33,10 @@ class Section extends Component {
             });
         }
     };
+
+    showStat(sta){
+        this.setState(state => ({show: sta}));
+    }
 
     tfChange(ID){
         var x = this.state.addList;
@@ -77,9 +82,9 @@ class Section extends Component {
                     <input className="todo-app__input" placeholder="What needs to be done?" 
                         onChange={this.inputChange}  value={this.state.inputValue}
                             onKeyUp={this.inputKeyUp}/>
-                    <Ul data={this.state.addList} TFChange={(e) => {this.tfChange(e)}} TFDelete={(e) => {this.tfDelete(e)}}/>
+                    <Ul data={this.state.addList} status={this.state.show} TFChange={(e) => {this.tfChange(e)}} TFDelete={(e) => {this.tfDelete(e)}}/>
                 </section>
-                <Footer data={this.state.addList} TFShow={() => {this.tfShow()}}/>
+                <Footer data={this.state.addList} TFShow={() => {this.tfShow()}} changeS={(e) => {this.showStat(e)}}/>
             </>
         );
     }
