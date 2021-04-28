@@ -40,7 +40,13 @@ function App() {
   // TODO:
   // 1. use async/await to call guess(number) in Axios
   // 2. Process the response from server to set the proper state values
-  const handleGuess = () => {}
+  const handleGuess = async () => {
+    let stat = await guess(number)
+    setStatus(stat)
+    if (stat === 'Equal'){
+      setHasWon(true)
+    }
+  }
 
   const gameMode = (
     <>
