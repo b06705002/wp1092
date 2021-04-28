@@ -37,6 +37,11 @@ function App() {
     </>
   )
 
+  // TODO:
+  // 1. use async/await to call guess(number) in Axios
+  // 2. Process the response from server to set the proper state values
+  const handleGuess = () => {}
+
   const gameMode = (
     <>
       <p>Guess a number between 1 to 100</p>
@@ -45,9 +50,7 @@ function App() {
         onChange={(e) => setNumber(e.target.value)}
       ></input>
       <button
-        // TODO: use async/await to call guess(number),
-        // process the response to set the proper state values
-        onClick={}
+        onClick={handleGuess}
         disabled={!number}
       >
         guess!
