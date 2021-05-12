@@ -61,7 +61,7 @@ const Body = () => {
       subject,
       score,
     });
-
+    console.log(message)
     if (!card) addErrorMessage(message);
     else addCardMessage(message);
   };
