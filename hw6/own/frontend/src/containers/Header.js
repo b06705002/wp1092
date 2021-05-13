@@ -16,13 +16,17 @@ const Wrapper = styled.section`
 `;
 
 const Header = () => {
-  const { addRegularMessage } = useScoreCard();
+  const { addRegularMessage, addErrorMessage } = useScoreCard();
 
   const handleClear = async () => {
-    const {
-      data: { message },
-    } = await axios.delete('/api/delete-card', {}); // TODO: axios.xxx call the right api
-    addRegularMessage(message);
+    try {
+      const {
+        data: { message },
+      } = await axios.delete('/api/delete-card', {}); // TODO: axios.xxx call the right api
+      addRegularMessage(message);
+    } catch (e) {
+      addErrorMessage("Connection Error");
+    }
   };
 
   return (

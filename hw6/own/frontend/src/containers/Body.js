@@ -54,25 +54,34 @@ const Body = () => {
   };
 
   const handleAdd = async () => {
-    const {
-      data: { message, card },
-    } = await axios.post('/api/create-card', {
-      name,
-      subject,
-      score,
-    });
-    console.log(message)
-    if (!card) addErrorMessage(message);
-    else addCardMessage(message);
+    try {
+      const {
+        data: { message, card },
+      } = await axios.post('/api/create-card', {
+        name,
+        subject,
+        score,
+      });
+      if (!card) addErrorMessage(message);
+      else addCardMessage(message);
+    } catch (e) {
+      addErrorMessage("Connection Error");
+    }
   };
 
   const handleQuery = async () => {
     const {
       data: { messages, message },
-    } = await {} // TODO: axios.xxx call the right api
-
+    } = await axios.post('/api/implement-query', {
+      "queryType": queryType,
+      "queryString": queryString,
+    });
+    // TODO: axios.xxx call the right api
     if (!messages) addErrorMessage(message);
-    else addRegularMessage(...messages);
+    else {
+      if (messages.length == 0) addRegularMessage(queryType + " (" + queryString + ") not found!");
+      else addRegularMessage(...messages);
+    }
   };
 
   return (

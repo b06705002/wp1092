@@ -67,4 +67,36 @@ router.delete('/delete-card', async function (_, res) {
 // TODO: implement the DB query
 // route.xx(xxxx)
 
+router.post('/implement-query', async function (req, res) {
+  if (req.body.queryType == 'name') {
+    try {
+      console.log("Implement Query", {name: req.body.queryString});
+      const existing = await ScoreCard.find({name: req.body.queryString})
+      console.log("Implement Query Success");
+      var existingList = [];
+      for (let i=0; i<existing.length; i++) {
+        existingList.push(existing[i].subject + ": " + String(existing[i].score));
+      }
+      res.json({ messages: existingList, message: 'Implement Success'});
+    } catch (e) {
+      console.log("Implement Query Error");
+      res.json({ message: 'Failed to implement'});
+    }
+  } else {
+    try {
+      console.log("Implement Query", {subject: req.body.queryString});
+      const existing = await ScoreCard.find({subject: req.body.queryString})
+      console.log("Implement Query Success");
+      var existingList = [];
+      for (let i=0; i<existing.length; i++) {
+        existingList.push(existing[i].name + ": " + String(existing[i].score));
+      }
+      res.json({ messages: existingList, message: 'Implement Success'});
+    } catch (e) {
+      console.log("Implement Query Error");
+      res.json({ message: 'Failed to implement'});
+    }
+  }
+});
+
 export default router;
