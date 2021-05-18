@@ -73,20 +73,39 @@ function App() {
           
           <span id="start-station-span">起始站</span>
           <select id="start-select" className="start-station"> {/* you should add both onChange and value to attributes */}
-            <option></option>
+            {/* <option></option> */}
+            <optgroup label={Object.keys(data)[0]}>
             {
               // generate options of all stations within option group
               // coding here ...
+              data[Object.keys(data)[0]].map((obj) => { return (<option id={'start-group-'+obj.station_id}>{obj.station_name}</option>)})
             }
+            </optgroup>
+            <optgroup label={Object.keys(data)[1]}>
+            {
+              // generate options of all stations within option group
+              // coding here ...
+              data[Object.keys(data)[1]].map((obj) => { return (<option id={'start-group-'+obj.station_id}>{obj.station_name}</option>)})
+            }
+            </optgroup>
           </select>
 
           <span id="end-station-span">終點站</span>
           <select id="end-select" className="end-station"> {/* you should add both onChange and value to attributes */}
-            <option></option>
+          <optgroup label={Object.keys(data)[0]}>
             {
               // generate options of all stations within option group
               // coding here ...
+              data[Object.keys(data)[0]].map((obj) => { return (<option id={'end-group-'+obj.station_id}>{obj.station_name}</option>)})
             }
+            </optgroup>
+            <optgroup label={Object.keys(data)[1]}>
+            {
+              // generate options of all stations within option group
+              // coding here ...
+              data[Object.keys(data)[1]].map((obj) => { return (<option id={'end-group-'+obj.station_id}>{obj.station_name}</option>)})
+            }
+            </optgroup>
           </select>
 
           <button onClick={calculateDistance} id="search-btn">查詢距離</button>
