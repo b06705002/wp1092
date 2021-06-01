@@ -5,15 +5,16 @@ import ChatModal from '../Components/ChatModal';
 import useChat from '../Components/UseChat'
 
 const { TabPane } = Tabs;
+
 const ChatRoom = ({me, displayStatus}) => {
-    const { status, sendMessage} = { useChat }
-    const [chatBoxes, setChatBoxes] = useState([]);
+    const {messages, status, sendMessage } = useChat()
+    const [chatBoxes, setChatBoxes] = useState([])
     const [activeKey, setActiveKey] = useState("")
     const [messageInput, setMessageInput] = useState("");
     const [modalVisible, setModalVisible] = useState(false);
     const addChatBox = () => { setModalVisible(true); };
     const createChatBOx = (friend) => {
-        const newKey = me <= friend ?'${me}_${friend}' : '${friend}_${me}';
+        const newKey = me <= friend ? `${me}_${friend}` : `${friend}_${me}`;
         if (chatBoxes.some(({key}) => key === newKey)) {
             throw new Error(friend + "'s chat box has already opened.");
         }
