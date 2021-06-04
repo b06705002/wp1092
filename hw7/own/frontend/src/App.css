@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+
+.me {
+  text-align: right;
+  margin-right: 1vw;
+}
+
+.friend {
+  text-align: left;
+  margin-left: 1vw;
+}
+
+.title {
+  font-size: 1vw;
+}
+
+.Hi {
+  overflow: auto;
+  height: 300px;
+}

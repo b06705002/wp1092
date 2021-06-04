@@ -97,7 +97,7 @@ const ChatRoom = ({me, displayStatus}) => {
                     {friend, key, chatLog}) => {
                         return (
                             <TabPane tab={friend} key={key} closable={true}>
-                                {chatLog.length != 0 ? (<Chatlog content={chatLog} friend={friend}/>) :(<p>{friend}'s chatbox.</p>)}
+                                {chatLog.length != 0 ? (<Chatlog content={chatLog} friend={friend} me={me}/>) :(<p>{friend}'s chatbox.</p>)}
                             </TabPane>
                         );
                     }
