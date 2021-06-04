@@ -1,20 +1,22 @@
 import '../App.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Tabs, Input } from 'antd';
 import ChatModal from '../Components/ChatModal';
-import useChat from '../Components/UseChat'
+import useChat from '../Components/UseChat';
+import Chatlog from '../Components/Chatlog';
 
 const { TabPane } = Tabs;
 
 const ChatRoom = ({me, displayStatus}) => {
-    const {messages, status, sendMessage } = useChat()
+    const {messages, status, sendMessage, setChatBox } = useChat()
     const [chatBoxes, setChatBoxes] = useState([])
     const [activeKey, setActiveKey] = useState("")
     const [messageInput, setMessageInput] = useState("");
     const [modalVisible, setModalVisible] = useState(false);
     const addChatBox = () => { setModalVisible(true); };
     const createChatBOx = (friend) => {
-        const newKey = me <= friend ? `${me}_${friend}` : `${friend}_${me}`;
+        // const newKey = me <= friend ? `${me}_${friend}` : `${friend}_${me}`;
+        const newKey = `${me}_${friend}`;
         if (chatBoxes.some(({key}) => key === newKey)) {
             throw new Error(friend + "'s chat box has already opened.");
         }
@@ -22,6 +24,8 @@ const ChatRoom = ({me, displayStatus}) => {
         const chatLog = [];
         newChatBoxes.push({ friend, key: newKey, chatLog});
         setChatBoxes(newChatBoxes);
+        setChatBox({me, friend});
+        // console.log(messages)
         setActiveKey(newKey);
     }
     const removechatBox = (targetKey) => {
@@ -45,7 +49,32 @@ const ChatRoom = ({me, displayStatus}) => {
             newActivityKey = '';
         setChatBoxes(newChatBoxes);
         setActiveKey(newActivityKey);
+
     }
+    
+    const setChatLog = (messages) => { 
+        let newChatBoxes = chatBoxes.slice() 
+        for (let i = 0; i < newChatBoxes.length; i++) { 
+            if (newChatBoxes[i].key === activeKey) { 
+                newChatBoxes[i].chatLog = messages 
+            } 
+        }
+        setChatBoxes(newChatBoxes) 
+    }
+
+    const setNewMessage = (status) => { 
+        let newChatBoxes = chatBoxes.slice()
+        for (let i = 0; i < newChatBoxes.length; i++) { 
+            if (newChatBoxes[i].key === activeKey) { 
+                newChatBoxes[i].chatLog.push(status)
+            } 
+        }
+        setChatBoxes(newChatBoxes) 
+    }
+
+    useEffect(() => setChatLog(messages.slice()), [messages]);
+
+    useEffect(() => setNewMessage(new Object(status)), [status]);
 
     return(
     <>
@@ -68,7 +97,7 @@ const ChatRoom = ({me, displayStatus}) => {
                     {friend, key, chatLog}) => {
                         return (
                             <TabPane tab={friend} key={key} closable={true}>
-                                <p>{friend}'s chatbox.</p>
+                                {chatLog.length != 0 ? (<Chatlog content={chatLog} friend={friend}/>) :(<p>{friend}'s chatbox.</p>)}
                             </TabPane>
                         );
                     }
