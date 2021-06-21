@@ -1,0 +1,12 @@
+ul, li {list-style-type: none;}
+ul{
+  padding: 0px;
+}
+.ltr {
+  text-align: left;
+  margin-bottom: 10px;
+  }
+.rtl {
+  text-align: right;
+  margin-bottom: 10px;
+  }
