@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "type": "commonjs",
   "scripts": {
-    "dev": "nodemon index.js"
+    "server": "nodemon index.js — ext js,graphql — exec babel-node"
   },
   "dependencies": {
     "dotenv-defaults": "^2.0.2",

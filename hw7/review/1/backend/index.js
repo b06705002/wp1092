@@ -4,12 +4,12 @@ const WebSocket = require('ws');
 const express = require('express');
 const path = require('path');
 const uuid = require('uuid');
-require('dotenv-defaults').config();
 
 const mongo = require('./mongo');
 
 const app = express();
 
+require('dotenv-defaults').config();
 /* -------------------------------------------------------------------------- */
 /*                               MONGOOSE MODELS                              */
 /* -------------------------------------------------------------------------- */
@@ -17,11 +17,9 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema({
   name: { type: String, required: true },
-  chatBoxes: [{ type: mongoose.Types.ObjectId, ref: 'ChatBox' }],
 });
 
 const messageSchema = new Schema({
-  chatBox: { type: mongoose.Types.ObjectId, ref: 'ChatBox' },
   sender: { type: mongoose.Types.ObjectId, ref: 'User' },
   body: { type: String, required: true },
 });
@@ -52,21 +50,21 @@ const wss = new WebSocket.Server({
   server,
 });
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'))); // use the index.js as an controler of backend
 
 const validateUser = async (name) => {
-  const existing = await UserModel.findOne({ name });
+  const existing = await UserModel.findOne({ name: name });
   if (existing) return existing;
-  return new UserModel({ name }).save();
+  return new UserModel({ name: name }).save();
 };
 
 const validateChatBox = async (name, participants) => {
-  let box = await ChatBoxModel.findOne({ name });
-  if (!box) box = await new ChatBoxModel({ name, users: participants }).save();
+  let box = await ChatBoxModel.findOne({ name: name });
+  if (!box) box = await new ChatBoxModel({ name: name, users: participants }).save();
   return box
     .populate('users')
     .populate({ path: 'messages', populate: 'sender' })
-    .execPopulate();
+    .execPopulate(); // to point the other table for real
 };
 
 // (async () => {
@@ -92,9 +90,9 @@ wss.on('connection', function connection(client) {
 
   client.on('message', async function incoming(message) {
     message = JSON.parse(message);
-    console.log(message)
+    console.log("get message :", message);
+    
     const { type } = message;
-
     switch (type) {
       // on open chat box
       case 'CHAT': {
@@ -103,7 +101,7 @@ wss.on('connection', function connection(client) {
         } = message;
 
         const chatBoxName = makeName(name, to);
-
+        console.log("CHAT :", chatBoxName);
         const sender = await validateUser(name);
         const receiver = await validateUser(to);
         const chatBox = await validateChatBox(chatBoxName, [sender, receiver]);
@@ -118,12 +116,9 @@ wss.on('connection', function connection(client) {
         if (!chatBoxes[chatBoxName]) chatBoxes[chatBoxName] = new Set(); // make new record for chatbox
         chatBoxes[chatBoxName].add(client); // add this open connection into chat box
 
-        console.log('hi')
         client.sendEvent({
           type: 'CHAT',
           data: {
-            name,
-            to, 
             messages: chatBox.messages.map(({ sender: { name }, body }) => ({
               name,
               body,
@@ -140,12 +135,12 @@ wss.on('connection', function connection(client) {
         } = message;
 
         const chatBoxName = makeName(name, to);
-
+        console.log("MESSAGE :", chatBoxName, body);
         const sender = await validateUser(name);
         const receiver = await validateUser(to);
         const chatBox = await validateChatBox(chatBoxName, [sender, receiver]);
 
-        const newMessage = new MessageModel({ sender, body });
+        const newMessage = new MessageModel({ sender: sender, body: body });
         await newMessage.save();
 
         chatBox.messages.push(newMessage);
@@ -155,8 +150,6 @@ wss.on('connection', function connection(client) {
           client.sendEvent({
             type: 'MESSAGE',
             data: {
-              name,
-              to,
               message: {
                 name,
                 body,
@@ -168,9 +161,9 @@ wss.on('connection', function connection(client) {
     }
 
     // disconnected
-    client.once('close', () => {
-      chatBoxes[client.box].delete(client);
-    });
+    // client.once('close', () => {
+    //   chatBoxes[client.box].delete(client);
+    // });
   });
 });
 

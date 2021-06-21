@@ -30,30 +30,52 @@
   overflow: auto;
 }
 
-.name {
-  display : flex;
-  display : inline-flex;
-  margin-right: 3px;
-  margin-left: 3px;
+.ant-tabs-content-holder {
+  height: 200px;
+  overflow: scroll;
 }
 
-.message {
-  display : flex;
-  display : inline-flex;
-  background: #908e8e52;
+.chat-message-group {
+  display: flex;
+}
+
+.chat-message-group .chat-messages {
+  display: block;
+  float: left;
+  width: 80%;
+  margin-bottom: 10px;
+}
+.chat-message-group .message {
+  display: block;
+  float: left;
+  padding: 10px;
+  background: #ecf1f8;
+  font-size: 16px;
   border-radius: 5px;
-  padding: 2px;
-  margin-right: 3px;
-  margin-left: 3px;
-
+  margin-bottom: 3px;
+}
+.chat-messages .from {
+  float: left;
+  display: block;
+  width: 100%;
+  text-align: left;
+  font-size: 11px;
 }
 
-.fromMe {
-  display: flex;
-  justify-content: flex-end;
+.writer-user .chat-messages {
+  display: block;
+  float: right;
+  width: 100%;
 }
-
-.fromFriend {
-  display: flex;
-  justify-content: flex-start;
+.writer-user .chat-messages .message {
+  display: block;
+  float: right;
+  background: #9cb9d0;
+  color: #fff;
+}
+.writer-user .chat-messages .from {
+  float: left;
+  display: block;
+  width: 100%;
+  text-align: right;
 }

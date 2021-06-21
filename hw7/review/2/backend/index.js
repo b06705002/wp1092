@@ -5,6 +5,7 @@ const express = require('express');
 const path = require('path');
 const uuid = require('uuid');
 
+require("dotenv-defaults").config();
 const mongo = require('./mongo');
 
 const app = express();
@@ -108,25 +109,24 @@ wss.on('connection', function connection(client) {
         const chatBox = await validateChatBox(chatBoxName, [sender, receiver]);
 
         // if client was in a chat box, remove that.
-        // if (chatBoxes[client.box])
-        //   // user was in another chat box
-        //   chatBoxes[client.box].delete(client);
+        if (chatBoxes[client.box])
+          // user was in another chat box
+          chatBoxes[client.box].delete(client);
 
         // use set to avoid duplicates
         client.box = chatBoxName;
-        if (!chatBoxes[chatBoxName]) 
-          chatBoxes[chatBoxName] = new Set(); // make new record for chatbox
+        if (!chatBoxes[chatBoxName]) chatBoxes[chatBoxName] = new Set(); // make new record for chatbox
         chatBoxes[chatBoxName].add(client); // add this open connection into chat box
 
         client.sendEvent({
           type: 'CHAT',
-          friend: to,
           data: {
             messages: chatBox.messages.map(({ sender: { name }, body }) => ({
               name,
               body,
             })),
           },
+          key: chatBoxName,
         });
 
         break;
@@ -152,14 +152,13 @@ wss.on('connection', function connection(client) {
         chatBoxes[chatBoxName].forEach((client) => {
           client.sendEvent({
             type: 'MESSAGE',
-            from: name,
-            to: to,
             data: {
               message: {
                 name,
                 body,
               },
             },
+            key: chatBoxName,
           });
         });
       }
@@ -171,9 +170,9 @@ wss.on('connection', function connection(client) {
     });
   });
 });
-require('dotenv-defaults').config();
+
 mongo.connect();
 
-server.listen(4000, () => {
+server.listen(process.env.PORT || 4000, () => {
   console.log('Server listening at http://localhost:4000');
 });

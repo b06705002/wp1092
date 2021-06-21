@@ -4,7 +4,17 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-  "start": "cd frontend && yarn start",
-  "server": "cd backend && yarn server"
+    "start": "cd frontend && yarn start",
+    "server": "cd backend && yarn server"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.14.3",
+    "@babel/core": "^7.14.3",
+    "@babel/node": "^7.14.2",
+    "@babel/preset-env": "^7.14.4"
+  },
+  "dependencies": {
+    "dotenv-defaults": "^2.0.2",
+    "uuid": "^8.3.2"
   }
 }
